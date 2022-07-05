@@ -24,3 +24,8 @@ func dealBoardtype() string {
     return ""
 }
 ```
+
+然后就可以解析命令行字符串：
+```go
+fmt.Println(bettle.Parse("boardtype --set PCB1"))
+```
