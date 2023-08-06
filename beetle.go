@@ -5,12 +5,10 @@
 package beetle
 
 import (
-	"github.com/jdhxyy/lagan"
 	"strings"
 )
 
 const (
-	tag           = "beetle"
 	cmdLineLenMax = 128
 )
 
@@ -67,10 +65,7 @@ func GetItem(index int) *CmdItem {
 
 // Parse 解析命令行.返回的是应答字符串,如果为空表示不需要回复
 func Parse(cmdLine string) string {
-	lagan.Debug(tag, "parse cmd line:%s", cmdLine)
-
 	if isCmdLineValid(cmdLine) == false {
-		lagan.Error(tag, "cmd line is invalid:%s", cmdLine)
 		return ""
 	}
 
@@ -86,7 +81,6 @@ func Parse(cmdLine string) string {
 
 		if strings.HasPrefix(params[i], "--") {
 			if len(params[i]) <= 2 {
-				lagan.Error(tag, "params is too short")
 				return ""
 			}
 			items[i].Type = TypeLongOption
@@ -96,7 +90,6 @@ func Parse(cmdLine string) string {
 
 		if strings.HasPrefix(params[i], "-") {
 			if len(params[i]) <= 1 {
-				lagan.Error(tag, "params is too short")
 				return ""
 			}
 			items[i].Type = TypeShortOption
@@ -111,7 +104,6 @@ func Parse(cmdLine string) string {
 	gItems = items
 	callback, ok := gObservers[gItems[0].Value]
 	if ok == false {
-		lagan.Error(tag, "can not find callback")
 		return ""
 	}
 	return callback()
